@@ -1,0 +1,53 @@
+﻿@model IEnumerable<IncIncSecurityEntity.Models.PieceWorkWorkerModel>
+
+@{
+    ViewData["Title"] = "Summary";
+
+}
+
+
+<h1>Summary</h1>
+
+@{ 
+    ViewData["Title"] = "Index";
+     
+    int totalWorkers = 0;
+    const int seniorEmployeeBasePay = 270;
+    decimal totalMessages = 0M;
+    decimal averagePay;
+    decimal totalPay = 0M;
+
+    //Incrementing for each worker
+    foreach(var item in Model)
+    {
+        totalWorkers++;
+        totalMessages += item.Messages;
+        totalPay += item.GetPay();
+    }
+
+    //Set the average and avoid the possibly divide by zero error
+    if(totalMessages > 0)
+    {
+        averagePay = totalPay / totalWorkers;
+    }
+    else
+    {
+        averagePay = 0;
+    }
+
+}
+
+<div class="col-md-8 offset-3 text-center">
+    <p>
+        Total Workers: @totalWorkers
+    </p>
+    <p>
+        Total Messages: @totalMessages
+    </p>
+    <p>
+        Total Pay: @totalPay.ToString("c")
+    </p>
+    <p>
+        Average pay: @averagePay.ToString("c")
+    </p>
+</div>
